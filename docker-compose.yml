@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:13.1
+    container_name: nestjs-postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: pass123
+      POSTGRES_DB: nestjs_db_ecommerce
+    volumes:
+      - nestjs_postgres_db_ecommerce:/data/postgres
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: michalhosna/adminer
+    container_name: nestjs-adminer
+    environment:
+      ADMINER_DB: nestjs_db_management
+      ADMINER_DRIVER: pgsql
+      ADMINER_SERVER: postgres
+      ADMINER_USERNAME: db_user
+      ADMINER_PASSWORD: pass123
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: This will be in the title!
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  nestjs_postgres_db_ecommerce:
