@@ -5,6 +5,11 @@ import { CategoryModule } from './category/category.module';
 import { ConfigModule } from "@nestjs/config";
 import { DatabaseModule } from './database/database.module';
 import * as Joi from 'joi';
+import { ServeStaticModule } from "@nestjs/serve-static";
+import { join } from 'path';
+import { ProductModule } from './product/product.module';
+import { SharedModule } from './shared/shared.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,7 +20,15 @@ import * as Joi from 'joi';
       isGlobal: true,
     }),
     CategoryModule,
-    DatabaseModule
+    DatabaseModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: '/uploads/' //last slash was important
+    }),
+    ProductModule,
+    SharedModule,
+    UserModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

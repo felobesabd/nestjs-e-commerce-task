@@ -1,16 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "../product/product.entity";
 
 @Entity()
-export class Category {
+export class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column()
-  image: string;
+  @Column({ nullable: true })
+  file: string;
 
   @Column()
   parent_id: number;
+
+  @OneToMany(type => Product, prod => prod.categoryId, {eager: false} )
+  cats: Product[];
 }
