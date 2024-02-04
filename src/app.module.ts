@@ -10,6 +10,7 @@ import { join } from 'path';
 import { ProductModule } from './product/product.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
+import { OrderModule } from "./order/order.module";
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { UserModule } from './user/user.module';
     ProductModule,
     SharedModule,
     UserModule,
-
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
