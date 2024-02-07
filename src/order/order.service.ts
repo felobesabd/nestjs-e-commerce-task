@@ -21,7 +21,7 @@ export class OrderService {
   async findAllOrders(user: User): Promise<Order[] | undefined> {
     const order = await this.orderRepo.findAllOrders(user);
 
-    if (!order) {
+    if (order.length === 0) {
       throw new NotFoundException(`Not found orders for user ${user.id}`)
     }
 
