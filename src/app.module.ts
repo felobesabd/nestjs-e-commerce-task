@@ -11,6 +11,8 @@ import { ProductModule } from './product/product.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
 import { OrderModule } from "./order/order.module";
+import { OrderItemsModule } from './order-items/order-items.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { OrderModule } from "./order/order.module";
     SharedModule,
     UserModule,
     OrderModule,
+    OrderItemsModule,
+    WishlistModule,
   ],
   controllers: [AppController],
   providers: [AppService],
