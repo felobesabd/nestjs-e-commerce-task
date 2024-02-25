@@ -9,6 +9,11 @@ export class CategoryRepository extends Repository<Category> {
     super(Category, dataSource.createEntityManager());
   }
 
+  async getAllCategory(): Promise<Category[]> {
+    const category = await this.find();
+    return category;
+  }
+
   async getCategoryById(catId: number): Promise<Category> {
     const category = await this.findOne({ where: { id: catId } });
     return category;

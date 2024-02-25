@@ -3,12 +3,43 @@ import { ProductRepository } from "./product.repository";
 import { Product } from "./product.entity";
 import { CreateProdDto } from "../dtos/product/create-prod-dto";
 import { UpdateProdDto } from "../dtos/product/update-prod-dto";
+import { Category } from "../category/category.entity";
 
 @Injectable()
 export class ProductService {
   constructor(
     private prodRepo: ProductRepository,
   ) {}
+
+  async getAllProducts(): Promise<Product[]> {
+    const products = await this.prodRepo.getAllProducts();
+
+    if (products.length === 0) {
+      throw new NotFoundException(`Not found products`)
+    }
+
+    return products;
+  }
+
+  async getOne(prodId: number): Promise<Product> {
+    const product = await this.prodRepo.getProductById(prodId);
+
+    if (!product) {
+      throw new NotFoundException(`Not found product by id: ${prodId}`)
+    }
+
+    return product;
+  }
+
+  async getProductsForCategory(catId: number): Promise<Product[]> {
+    const products = await this.prodRepo.getProductsForCategory(catId);
+
+    if (products.length === 0) {
+      throw new NotFoundException(`Not found products for category id: ${catId}`)
+    }
+
+    return products;
+  }
 
   async create(createProdDto: CreateProdDto): Promise<Product> {
     let product;
@@ -25,22 +56,9 @@ export class ProductService {
     return product;
   }
 
-  async getOne(prodId: number): Promise<Product> {
-    const product = await this.prodRepo.getProductById(prodId);
-
-    if (!product) {
-      throw new NotFoundException(`Not found product by id: ${prodId}`)
-    }
-
-    return product;
-  }
-
   async update(catId: number, updateProd: UpdateProdDto): Promise<Product> {
-    const product = await this.prodRepo.updateProduct(catId, updateProd);
-
-    const selectedCat = await this.getOne(catId);
-
-    return selectedCat;
+    await this.prodRepo.updateProduct(catId, updateProd);
+    return await this.getOne(catId);
   }
 
   async delete(prodId: number): Promise<void> {

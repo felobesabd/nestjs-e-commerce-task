@@ -2,8 +2,7 @@ import { IsNotEmpty, IsNumberString, IsOptional, IsString } from "class-validato
 
 export class catDto {
   @IsNotEmpty()
-  @IsString()
-  name: string;
+  name: object;
 
   @IsOptional()
   file: string;

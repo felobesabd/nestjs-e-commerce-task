@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { User } from "../user/user.entity";
 import { OrderItems } from "../order-items/order-items.entity";
 
@@ -13,6 +13,6 @@ export class Order extends BaseEntity {
   @Column()
   userId: number;
 
-  @OneToMany(type => OrderItems, orderItem => orderItem.id, {eager: false} )
+  @OneToMany(type => OrderItems, orderItem => orderItem.item_order, {eager: true} )
   orderItems: OrderItems[];
 }

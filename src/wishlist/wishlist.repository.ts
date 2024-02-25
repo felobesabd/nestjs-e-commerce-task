@@ -27,11 +27,11 @@ export class WishlistRepository extends Repository<Wishlist> {
     return wishlist;
   }
 
-  async deleteWishlistByUser(wishlistId: number, userId: number): Promise<void> {
-    const wishlist = await this.delete({ wishlist_id: wishlistId, wishlist_user: userId });
+  async deleteWishlistByUser(prodId: number, userId: number): Promise<void> {
+    const wishlist = await this.delete({ wishlist_product: prodId, wishlist_user: userId });
 
     if (wishlist.affected === 0) {
-      throw new NotFoundException(`Not found wishlist for this id => ${wishlistId}`)
+      throw new NotFoundException(`Not found wishlist for this id => ${prodId}`)
     }
   }
 }

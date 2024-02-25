@@ -21,6 +21,11 @@ import { UpdateResult } from "typeorm";
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}
 
+  @Get('')
+  getAll(): Promise<Category[]> {
+    return this.categoryService.getAll();
+  }
+
   @Get('/:id')
   getOne(@Param('id', ParseIntPipe) id: number): Promise<Category> {
     return this.categoryService.getOne(id);
@@ -34,9 +39,9 @@ export class CategoryController {
       throw new BadRequestException('file is not a image')
     }
 
-    req.body.file = file.filename;
+    createCatDto.file = file ? file.filename : '';
     // const imagePath = `${file.filename}`
-    console.log(req.body);
+    // req.body.file = file ? file.filename : '';
 
     return this.categoryService.createCategory(createCatDto);
   }

@@ -43,7 +43,7 @@ export class OrderItemsRepository extends Repository<OrderItems> {
             "order_items".* 
             FROM "user" 
             INNER JOIN "order" ON "order"."userId" = "user".id  
-            INNER JOIN "order_items" ON "order_items"."itemOrderId" = "order"."orderId" 
+            INNER JOIN "order_items" ON "order_items"."item_order" = "order"."orderId" 
             where 
                 "order"."orderId" = :orderId AND 
                 "user".id = :user
@@ -69,7 +69,7 @@ export class OrderItemsRepository extends Repository<OrderItems> {
     }
   }
 
-  async deleteِAll(orderId: number): Promise<void> {
+  async deleteِAll(orderId: any): Promise<void> {
     const deletedOrder = await this.delete({item_order: orderId})
 
     if (deletedOrder.affected === 0) {

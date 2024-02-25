@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { UserRepository } from "./user.repository";
 import { SignupDto } from "./dtos/signup-dto";
 import { User } from "./user.entity";
@@ -24,7 +24,14 @@ export class UserService {
     user.salt = await bcrypt.genSalt();
     user.password = await this.hashPass(password, user.salt);
 
-    await this.userRepo.save(user);
+    try {
+      await this.userRepo.save(user);
+    } catch (e) {
+      if (e.code === '23505') {
+        console.log(e);
+        throw new BadRequestException(`username or email already exist please changed`)
+      }
+    }
     delete user.password;
     delete user.salt;
 
@@ -51,7 +58,16 @@ export class UserService {
   }
 
   async update(userId: number, updateUser: UpdateUserDto): Promise<User> {
-    const userUpdated = await this.userRepo.updateUser(userId, updateUser);
+    let userUpdated;
+
+    try {
+      userUpdated = await this.userRepo.updateUser(userId, updateUser);
+    } catch (e) {
+      if (e.code === '23505') {
+        console.log(e);
+        throw new BadRequestException(`username or email already exist please changed`)
+      }
+    }
 
     const selectedUser = await this.userRepo.getUserById(userId);
     delete selectedUser.salt;

@@ -82,6 +82,7 @@ export class OrderItemsService {
         throw new NotFoundException(`Key (product) or (order) is not found in table "product, order".`)
       }
     }
+    console.log(item);
 
     return item;
   }
@@ -122,7 +123,7 @@ export class OrderItemsService {
     await this.orderItemRepo.deleteOneOrderItemsForUser(orderItemId);
   }
 
-  async deleteAllOrderItemsForUser(orderId: number, user: User): Promise<void> {
+  async deleteAllOrderItemsForUser(orderId: any, user: User): Promise<void> {
     await this.getOrderItemForLoggedUser(orderId, user);
 
     await this.orderItemRepo.deleteِAll(orderId);

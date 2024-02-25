@@ -11,5 +11,4 @@ export class Wishlist extends BaseEntity {
 
   @Column()
   wishlist_product: number;
-
 }

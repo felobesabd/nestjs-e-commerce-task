@@ -9,6 +9,16 @@ export class CategoryService {
     private categoryRepo: CategoryRepository,
   ) {}
 
+  async getAll(): Promise<Category[]> {
+    const cats = await this.categoryRepo.getAllCategory();
+
+    if (cats.length === 0) {
+      throw new NotFoundException(`Not found Categories`)
+    }
+
+    return cats;
+  }
+
   async createCategory(createCatDto: catDto): Promise<Category> {
     const category = await this.categoryRepo.save(createCatDto)
 
