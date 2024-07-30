@@ -18,7 +18,7 @@ async function bootstrap() {
 
   app.use(cors())
 
-  app.useGlobalFilters(new I18nValidationExceptionFilter({ detailedErrors: false }))
+  app.useGlobalFilters(new I18nValidationExceptionFilter({ detailedErrors: true }))
 
   const config: ConfigService = app.get(ConfigService);
   const port: number = config.get<number>('PORT');

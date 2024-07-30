@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { DataSource, EntityManager, Repository, UpdateResult } from "typeorm";
 import { Product } from "./product.entity";
 import { UpdateProdDto } from "../dtos/product/update-prod-dto";

@@ -15,6 +15,6 @@ import { OrdersRepository } from "../order/order.repository";
     TypeOrmModule.forFeature([OrderItems]),
     UserModule,
   ],
-
+  exports: [OrderItemsService],
 })
 export class OrderItemsModule {}

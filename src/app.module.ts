@@ -15,6 +15,7 @@ import { OrderItemsModule } from './order-items/order-items.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import * as path from "path";
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from "nestjs-i18n";
+import { CartModule } from "./cart/cart.module";
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } fro
     OrderModule,
     OrderItemsModule,
     WishlistModule,
+    CartModule
   ],
   controllers: [AppController],
   providers: [AppService],

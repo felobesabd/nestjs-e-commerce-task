@@ -34,7 +34,6 @@ export class OrderController {
 
   @Post()
   addOrder(@GetUser() user: User) {
-    console.log(user);
     return this.orderService.addOrder(user);
   }
 

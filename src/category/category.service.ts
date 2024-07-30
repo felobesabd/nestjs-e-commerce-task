@@ -5,6 +5,8 @@ import { Category } from "./category.entity";
 
 @Injectable()
 export class CategoryService {
+  public lang: string;
+
   constructor(
     private categoryRepo: CategoryRepository,
   ) {}
@@ -15,6 +17,10 @@ export class CategoryService {
     if (cats.length === 0) {
       throw new NotFoundException(`Not found Categories`)
     }
+
+    cats.map((cat)=> {
+      cat.name = cat.name[this.lang];
+    });
 
     return cats;
   }
@@ -32,6 +38,8 @@ export class CategoryService {
     if (!cat) {
       throw new NotFoundException(`Not found Category by id: ${catId}`)
     }
+
+    cat.name = cat.name[this.lang];
 
     return cat;
   }

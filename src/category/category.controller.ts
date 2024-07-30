@@ -1,10 +1,10 @@
 import {
   BadRequestException,
   Body,
-  Controller, Delete, Get, HttpCode, HttpStatus, Param,
+  Controller, Delete, Get, HttpCode, HttpStatus, Inject, Injectable, Param,
   ParseIntPipe, Patch,
   Post,
-  Req,
+  Req, Scope,
   UploadedFile,
   UseInterceptors
 } from "@nestjs/common";
@@ -16,13 +16,22 @@ import { diskStorage } from 'multer'
 import { v4 as uuid } from 'uuid';
 import { localOpts } from "../config/multer.config";
 import { UpdateResult } from "typeorm";
+import { REQUEST } from "@nestjs/core";
+import { Request } from 'express';
 
 @Controller('category')
+@Injectable({ scope: Scope.REQUEST })
 export class CategoryController {
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
+    this.categoryService.lang = this.request.header('Accept-Language');
+  }
 
   @Get('')
-  getAll(): Promise<Category[]> {
+  getAll(@Req() req: any): Promise<Category[]> {
+    console.log(req);
     return this.categoryService.getAll();
   }
 
